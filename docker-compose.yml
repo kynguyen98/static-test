@@ -1,0 +1,21 @@
+version: "3"
+services:
+        blog:
+                build: ./
+                image: blog:1.0
+                ports:
+                        - "456:80"
+                        - "450:443"
+                volumes:
+                        - .:/blog
+                        - ./logs:/var/log/apache2
+                        - ./httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
+                container_name: blog
+                domainname: www.test.com
+                hostname: alpine
+                command: httpd -D FOREGROUND
+
+networks:
+        default:
+                external: 
+                        name: vpc
